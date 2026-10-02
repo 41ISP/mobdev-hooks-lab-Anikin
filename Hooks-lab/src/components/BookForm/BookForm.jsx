@@ -1,33 +1,34 @@
-import { useState } from "react"
+import { useState } from "react";
 
-const BookForm = () => {
-  
+export default function BookForm({ onAdd }) {
+  const [title, setTitle] = useState("");
 
-  const [bookField, setBooksField] = useState('')
+  function handleSubmit() {
+    const trimmed = title.trim();
+    if (trimmed === "") return;
+    onAdd(trimmed);
+    setTitle("");
+  }
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (bookField.trim().length === 0 || taskField.trim().length > 40) return
-        const newTask = {
-            id: nanoid(),
-            title: taskField.trim()
-        }
-        setTasks([...books, newBooks])
-        setTaskField("")
+  return (
+    <div className="add-book-row">
+      <input
+        className="input"
+        id="bookInput"
+        type="text"
+        placeholder="Название книги..."
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        onKeyDown={e => e.key === "Enter" && handleSubmit()}
+      />
+      <button
+        className="btn"
+        id="addBtn"
+        type="button"
+        onClick={handleSubmit}
+      >
+        Добавить на полку
+      </button>
+    </div>
+  );
 }
-
-    return (
-      <div className="add-book-row">
-        <input
-          className="input"
-          id="bookInput"
-          placeholder="Название книги..."
-        />
-        <button className="btn" id="addBtn">
-          Добавить на полку
-        </button>
-      </div>
-)
-}
-export default BookForm 

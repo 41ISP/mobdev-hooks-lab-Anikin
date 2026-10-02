@@ -1,29 +1,15 @@
-function FilterChip({currentMode, onFilterChange}) 
+import './FilterChip.css'
+
+export default function FilterChip ({ isActive, onToggle}) 
 {
-    return
-    (
-        <div class Name = "Filter-chip">
-            <button
-            className={currentMode === 'all' ? 'active':''}
-            onClick={( ) => onFilterChange('all')}  
-            >
-                Все книги
-            </button>
-            <button
-            className={currentMode === 'unread' ? 'active' : ''}
-            onClick={() => onFilterChange('unread')}
-            >
-            <span className="dot" />
+    return(
+        <button
+            type='button'
+            className={`filter-chip${isActive ? ' active ' : '' }`}
+            onClick={onToggle}>
+            <span
+            className='dot' />
             Только непрочитанные
-            </button>
-            <button
-            className={currentMode === 'read' ? 'active' : ''}
-            onClick={() => onFilterChange('read')}
-            >
-            <span className = "dot" />
-            Только прочитанные
-            </button>
-        </div>
-);    
+        </button>
+    )
 }
-export default FilterChip

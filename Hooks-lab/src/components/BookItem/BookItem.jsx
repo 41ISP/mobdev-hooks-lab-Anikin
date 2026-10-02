@@ -1,24 +1,45 @@
-const BookItem = () => {
-    return (
-    <div className="book-row" data-id={1}>
-          <div className="book-cover" style={{ background: "#4f6b52" }}>
-            </div>
-            <div className="book-info">
-            <p className="book-title done">Клара и Солнце</p>
-            <div className="book-author">Кадзуо Исигуро</div>
-          </div>
-          <div className="read-check checked" data-role="toggle">
-            <span className="check-circle">✓</span>
-            <span className="read-label">Прочитано</span>
-          </div>
-     
-     <button
-            className="delete-btn"
-            data-role="delete"
-            title="Убрать с полки"
-            ✕
-          </button>
+import CheckBox from '../CheckBox/CheckBox'
+import './BookItem.css'
+
+const PALETTE = ["#4f6b52", "#384d68", "#8d5c62", "#9b633e", "#4c4c45", "#536c58"];
+
+export default function BookItem({ book, onDelete, onToggleRead }) 
+{
+  const coverColor = PALETTE[book.id % PALETTE.length];
+
+  return (
+    <div 
+    className='book-row'>
+      <div 
+      className='book-cover' style={{ background: coverColor }}>
+        {book.title[0]}
+      </div>
+
+      <div 
+      className='book-info'>
+        <p 
+        className={`book-title${book.isRead ? ' done ' : ''}`}>
+          {book.title}
+        </p>
+        <div 
+        className='book-author'>{book.author}
+        </div>
+      </div>
+
+      <CheckBox
+        checked={book.isRead}
+        onChange={() => onToggleRead(book.id)}
+        label="Прочитано"
+      />
+
+      <button
+        className='delete-btn'
+        type='button'
+        title="Убрать с полки"
+        onClick={() => onDelete(book.id)}
+      >
+        ✕
+      </button>
     </div>
-)
+  );
 }
-export default BookItem 

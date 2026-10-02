@@ -1,59 +1,36 @@
-import BookForm from "./BookForm"
-import BookList from "./BookList"
+import BookForm from '../../components/BookForm/BookForm'
+import BookList from '../../components/BookList/BookList'
+import FilterChip from '../../components/FilterChip/FilterChip'
+import './ShelfScreen.css'
 
-const ShelfScreen = () => {
-      const [books, setBooks] = useState([
-    ])
-    return (
-    <section className="screen active" id="screen-shelf">
-      <p className="greeting">Добрый вечер</p>
-    {/* BOOKFORM======================================== */}
-      <BookForm setBooks={setBooks}/>
-      {/* <div className="add-book-row">
-        <input
-          className="input"
-          id="bookInput"
-          placeholder="Название книги..."
-        />
-        <button className="btn" id="addBtn">
-          Добавить на полку
-        </button>
-      </div> */}
-      <div className="list-toolbar">
-        <span className="toolbar-title">Книги</span>
-        <div className="filter-chip">
-          <input type="checkbox" id="filterCheckbox" />
-          <label htmlFor="filterCheckbox">
-            <span className="dot" />
-            Только непрочитанные
-          </label>
-        </div>
+export default function ShelfScreen({
+  books,
+  showOnlyUnread,
+  onAdd,
+  onDelete,
+  onToggleRead,
+  onToggleFilter,
+}) {
+  const visibleBooks = showOnlyUnread
+    ? books.filter(book => !book.isRead)
+    : books;
+
+  return (
+    <section className='screen active' id='screen-shelf'>
+      <p className='greeting'>Добрый вечер</p>
+
+      <BookForm onAdd={onAdd} />
+
+      <div className='list-toolbar'>
+        <span className='toolbar-title'>Книги</span>
+        <FilterChip isActive={showOnlyUnread} onToggle={onToggleFilter} />
       </div>
-    {/* BOOKLIST=============================================== */}
-      <BookList/>
-      {/* <div className="book-list" id="bookList">
-        <div className="book-row" data-id={1}>
-          <div className="book-cover" style={{ background: "#4f6b52" }}>
-            К
-          </div>
-          <div className="book-info">
-            <p className="book-title done">Клара и Солнце</p>
-            <div className="book-author">Кадзуо Исигуро</div>
-          </div>
-          <div className="read-check checked" data-role="toggle">
-            <span className="check-circle">✓</span>
-            <span className="read-label">Прочитано</span>
-          </div>
-          <button
-            className="delete-btn"
-            data-role="delete"
-            title="Убрать с полки"
-          >
-            ✕
-          </button>
-        </div>
-      </div> 
+
+      <BookList
+        books={visibleBooks}
+        onDelete={onDelete}
+        onToggleRead={onToggleRead}
+      />
     </section>
-)
+  );
 }
-export default ShelfScreen 
